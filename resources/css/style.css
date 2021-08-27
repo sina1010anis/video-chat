@@ -1,0 +1,268 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+}
+@font-face {
+    font-family: IRANS;
+    src: url("./font/IRANYekanBlack.ttf");
+}
+
+@font-face {
+    font-family: IRANY;
+    src: url("./font/IRANSansWeb.ttf");
+}
+
+a {
+    text-decoration: none !important;
+}
+
+#shit {
+    width: 100%;
+}
+
+#row {
+    width: 100%;
+    max-width: 1366px;
+    margin: auto;
+}
+.f-9 {
+    font-size: 9px;
+}
+
+.f-10 {
+    font-size: 10px;
+}
+
+.f-11 {
+    font-size: 11px;
+}
+
+.f-12 {
+    font-size: 12px;
+}
+
+.f-13 {
+    font-size: 13px;
+}
+
+.f-14 {
+    font-size: 14px;
+}
+
+.f-15 {
+    font-size: 15px;
+}
+
+.f-16 {
+    font-size: 16px;
+}
+
+.f-17 {
+    font-size: 17px;
+}
+
+.f-18 {
+    font-size: 18px;
+}
+
+.f-19 {
+    font-size: 19px;
+}
+
+.f-20 {
+    font-size: 20px;
+}
+
+.f-21 {
+    font-size: 21px;
+}
+
+.f-22 {
+    font-size: 22px;
+}
+
+.color-b-100 {
+    color: #fcfcfc;
+}
+
+.color-b-200 {
+    color: #f5f5f5;
+}
+
+.color-b-300 {
+    color: #e5e5e5;
+}
+
+.color-b-400 {
+    color: #c8c8c8;
+}
+
+.color-b-500 {
+    color: #b1b1b1;
+}
+
+.color-b-600 {
+    color: #919191;
+}
+
+.color-b-700 {
+    color: #727272;
+}
+
+.color-b-800 {
+    color: #565656;
+}
+
+.color-b-800 {
+    color: #353535;
+}
+
+.color-b-900 {
+    color: #1c1c1c;
+}
+
+.color-b {
+    color: #000000;
+}
+.fl-right{
+    float: right;
+}
+.fl-left{
+    float: left;
+}
+.test-w{
+    width: 100%;
+    height: 200px;
+    background-color: red;
+}
+.test-h{
+    width: 200px;
+    height: 100%;
+    background-color: red;
+}
+.w-25{
+    width: 25%;
+}
+.w-50{
+    width: 50%;
+}
+.w-75{
+    width: 75%;
+}
+.w-100{
+    width: 100%;
+}
+
+.w-15{
+    width: 15%;
+}
+.w-30{
+    width: 30%;
+}
+.w-65{
+    width: 65%;
+}
+.w-90{
+    width: 90%;
+}
+.h-25{
+    height: 25%;
+}
+.h-50{
+    height: 50%;
+}
+.h-75{
+    height: 75%;
+}
+.h-100{
+    height: 100%;
+}
+.set-font{
+    font-family: IRANY;
+}
+.obj-center{
+    display: flex;
+    justify-content:center;
+    align-items: center;
+}
+.obj-center-c{
+    display: flex;
+    flex-direction: column;
+}
+.sc-2{
+    transform: scale(0.2);
+}
+.sc-4{
+    transform: scale(0.4);
+}
+.sc-6{
+    transform: scale(0.6);
+}
+.sc-8{
+    transform: scale(0.8);
+}
+.sc-10{
+    transform: scale(10);
+}
+.line{
+    width: 100%;
+    height: 1px;
+    margin: 10px 0;
+    background-color: #e9e9e9;
+}
+.btn-st-bg{
+    padding: 10px 30px;
+    background-color: unset;
+    border: 1px solid #c1c1c1;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.btn-st-bg:hover{
+    background-color: #f8f8f8;
+}
+.select-center{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+.input-back{
+    width: 100%;
+    height: 45px;
+    padding: 8px;
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    margin: 10px 0;
+    border: none;
+    outline: none;
+}
+.input-border{
+    width: 100%;
+    height: 45px;
+    padding: 8px;
+    background-color: unset;
+    border: 1px solid #f5f5f5;
+    border-radius: 10px;
+    margin: 10px 0;
+    outline: none;
+}
+.pointer{
+    cursor: pointer;
+}
+.m-p-0{
+    margin: 0!important;
+    padding: 0!important;
+}
+.red-back{
+    background-color: red!important;
+}
+.textarea{
+    width: 100%;
+    max-width: 100%;
+    height: 100px;
+    min-height: 50px;
+    max-height: 200px;
+    min-width: 100%;
+}

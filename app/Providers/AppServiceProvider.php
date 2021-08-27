@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Helper\Pattern\Adapter\Item_2;
+use App\Helper\Pattern\Adapter\Item_2_Interface;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
@@ -25,5 +27,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
+        $this->app->singleton(Item_2_Interface::class , function (){
+            return new Item_2();
+        });
     }
 }
