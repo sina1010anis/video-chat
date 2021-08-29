@@ -14,9 +14,9 @@ use \App\Http\Controllers\WebrtcStreamingController;
 |
 */
 
-Route::get('/', [\App\Http\Controllers\HomeController::class  , 'test']);
+Route::get('/', [\App\Http\Controllers\HomeController::class  , 'test'])->middleware('verified');
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 Route::get('/streaming', [WebrtcStreamingController::class , 'index']);
 Route::get('/streaming/{streamId}', [WebrtcStreamingController::class , 'consumer'] );
 Route::post('/stream-offer',  [WebrtcStreamingController::class , 'makeStreamOffer']);
