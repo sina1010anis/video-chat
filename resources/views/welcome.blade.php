@@ -9,8 +9,10 @@
         <link rel="stylesheet" href="style.css">
     </head>
     <body class="antialiased">
-        <div id="app" class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
-        </div>
+        <form action="{{route('setSession')}}" method="post">
+            @csrf
+            <button type="submit">Next</button>
+        </form>
     </body>
     <script src="https://unpkg.com/feather-icons"></script>
     <script src="{{url('js/app.js')}}"></script>

@@ -14,7 +14,10 @@ use \App\Http\Controllers\WebrtcStreamingController;
 |
 */
 
-Route::get('/', [\App\Http\Controllers\HomeController::class  , 'test'])->middleware('verified');
+Route::get('/', [\App\Http\Controllers\HomeController::class  , 'viewBtn'])->name('viewBtn');
+Route::post('/set/session', [\App\Http\Controllers\HomeController::class  , 'setSession'])->name('setSession');
+Route::get('/form', [\App\Http\Controllers\HomeController::class  , 'formSession'])->name('formSession');
+Route::post('/check/session', [\App\Http\Controllers\HomeController::class  , 'checkSession'])->name('checkSession');
 
 Auth::routes(['verify' => true]);
 Route::get('/streaming', [WebrtcStreamingController::class , 'index']);
