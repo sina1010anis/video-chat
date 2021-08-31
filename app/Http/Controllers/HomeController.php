@@ -9,6 +9,7 @@ use App\Http\Requests\CodeRequest;
 use App\Models\User;
 use App\Repository\Token\ChackSessionClass;
 use App\Repository\Token\NewToken;
+use App\Repository\Token\Token;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Mail;
@@ -18,9 +19,11 @@ use Psy\Util\Str;
 
 class HomeController extends Controller
 {
-    public function __construct()
+    protected $token;
+    public function __construct(Token $token)
     {
         $this->middleware('auth');
+        $this->token = $token;
     }
 
     /**
@@ -65,18 +68,24 @@ class HomeController extends Controller
         return view('welcome');
     }
     // این متد سیشن رو میسازه و یک ایمل برای کاربر تحت همان سیشن میفرسته
-    public function setSession(NewToken $newToken)
+    public function setSession()
     {
-        return $newToken->code(10)->sendMail(auth()->user()->email)->setSession()->hasSession('formSession');
+        return $this->token::make('NewToken')
+            ->code(10)
+            ->sendMail(auth()->user()->email)
+            ->setSession()
+            ->hasSession('formSession');
     }
 
     public function formSession()
     {
         return view('home');
     }
-
-    public function checkSession(CodeRequest $request , ChackSessionClass $chackSessionClass)
+    // در این متد برسی میشه ایا سیشن مورد نظر هستش یا نه و بعد از این کار برسی میشه ایا قبل 60 ثانیه این کد وارد شده یا قبل 60 ثانیه
+    public function checkSession(CodeRequest $request)
     {
-        return $chackSessionClass->hasSession()->checkSession($request->code , 'viewBtn');
+        return $this->token::make('CheckSession')
+            ->hasSession()
+            ->checkSession($request->code , 'viewBtn');
     }
 }
