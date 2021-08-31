@@ -9,10 +9,17 @@
         <link rel="stylesheet" href="style.css">
     </head>
     <body class="antialiased">
-        <form action="{{route('setSession')}}" method="post">
-            @csrf
-            <button type="submit">Next</button>
-        </form>
+        <div id="app">
+            <h1>Token</h1>
+            <form action="{{route('setSession')}}" method="post">
+                @csrf
+                <button type="submit">Next</button>
+            </form>
+            <hr>
+            <h1>Api And Buy</h1>
+            <br>
+            <a href="{{route('buyProduct')}}">Buy</a href="{{route('buyProduct')}}">
+        </div>
     </body>
     <script src="https://unpkg.com/feather-icons"></script>
     <script src="{{url('js/app.js')}}"></script>

@@ -6,11 +6,14 @@ use App\Helper\Pattern\Adapter\Adapter;
 use App\Helper\Pattern\Adapter\Item_1;
 use App\Helper\Pattern\Adapter\Item_2;
 use App\Http\Requests\CodeRequest;
+use App\Http\Resources\UserCollection;
 use App\Models\User;
 use App\Repository\Token\ChackSessionClass;
 use App\Repository\Token\NewToken;
 use App\Repository\Token\Token;
+use Database\Factories\UserFactory;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\TestMail;
@@ -87,5 +90,8 @@ class HomeController extends Controller
         return $this->token::make('CheckSession')
             ->hasSession()
             ->checkSession($request->code , 'viewBtn');
+    }
+    public function buyProduct(){
+        return redirect()->route('api.data');
     }
 }

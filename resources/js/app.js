@@ -20,6 +20,13 @@ const app = createApp({
         test,
         broadcaster:Broadcaster,
         viewer:Viewer
+    },
+    methods:{
+        buyProduct(){
+            axios.post('/buy').then((res) => {
+                alert('ok');
+            })
+        }
     }
 })
 
