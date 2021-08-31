@@ -64,7 +64,7 @@ class HomeController extends Controller
     {
         return view('welcome');
     }
-
+    // این متد سیشن رو میسازه و یک ایمل برای کاربر تحت همان سیشن میفرسته
     public function setSession(NewToken $newToken)
     {
         return $newToken->code(10)->sendMail(auth()->user()->email)->setSession()->hasSession('formSession');
@@ -77,6 +77,6 @@ class HomeController extends Controller
 
     public function checkSession(CodeRequest $request , ChackSessionClass $chackSessionClass)
     {
-        return $chackSessionClass->timeoutSession()->hasSession()->checkSession($request->code , 'viewBtn');
+        return $chackSessionClass->hasSession()->checkSession($request->code , 'viewBtn');
     }
 }

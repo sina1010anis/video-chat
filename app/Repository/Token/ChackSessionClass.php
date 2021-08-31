@@ -8,17 +8,9 @@ class ChackSessionClass implements CheckToken
 {
     protected $status = false;
     protected $timeout = false;
-    public function timeoutSession(){
-        if (!jdate()->getTimestamp() + 60){
-            $this->timeout = true;
-        }else{
-            $this->timeout = false;
-        }
-        return $this;
-    }
     public function hasSession()
     {
-        if ($this->timeout && session()->has('key_token')){
+        if (session()->has('key_token')){
             $this->status = true;
         }
         return $this;
@@ -26,7 +18,7 @@ class ChackSessionClass implements CheckToken
 
     public function checkSession(string $code ,string $route)
     {
-        if ($this->status && $code == session()->get('key_token')){
+        if ($this->status && $code == session()->get('key_token') && session()->get('time_out') - time() >= -60){
             return 'Ok Token';
         }else{
             session()->forget('key_token');
