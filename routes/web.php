@@ -2,7 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\WebrtcStreamingController;
-
+use \App\Http\Controllers\HomeController;
+use \App\Http\Controllers\MessengerController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,23 +15,34 @@ use \App\Http\Controllers\WebrtcStreamingController;
 |
 */
 // < token route >
-Route::get('/', [\App\Http\Controllers\HomeController::class  , 'viewBtn'])->name('viewBtn');
-Route::post('/set/session', [\App\Http\Controllers\HomeController::class  , 'setSession'])->name('setSession');
-Route::get('/form', [\App\Http\Controllers\HomeController::class  , 'formSession'])->name('formSession');
-Route::post('/check/session', [\App\Http\Controllers\HomeController::class  , 'checkSession'])->name('checkSession');
+Route::get('/', [HomeController::class  , 'viewBtn'])->name('viewBtn');
+Route::post('/set/session', [HomeController::class  , 'setSession'])->name('setSession');
+Route::get('/form', [HomeController::class  , 'formSession'])->name('formSession');
+Route::post('/check/session', [HomeController::class  , 'checkSession'])->name('checkSession');
 // </ token route >
 
 // < api buy >
-Route::get('/buy' , [\App\Http\Controllers\HomeController::class , 'buyProduct'])->name('buyProduct');
+Route::get('/buy' , [HomeController::class , 'buyProduct'])->name('buyProduct');
 // </ api buy >
 
+// < Pusher >
+Route::get('/form' , [HomeController::class , 'form'])->name('form');
+Route::post('/form' , [HomeController::class , 'sendForm'])->name('send.form');
+// </ Pusher >
 
-Route::get('/test' , [\App\Http\Controllers\HomeController::class , 'test'])->name('test');
+// < Messenger >
+Route::prefix('/app')->as('app')->middleware('auth')->group(function (){
+    Route::get('/' , [MessengerController::class , 'app'])->name('.index');
+    Route::post('/search/user' , [MessengerController::class , 'searchUser'])->name('.search.user');
+});
+// </ Messenger >
+
+Route::get('/test' , [HomeController::class , 'test'])->name('test');
 
 Auth::routes(['verify' => true]);
 Route::get('/streaming', [WebrtcStreamingController::class , 'index']);
 Route::get('/streaming/{streamId}', [WebrtcStreamingController::class , 'consumer'] );
 Route::post('/stream-offer',  [WebrtcStreamingController::class , 'makeStreamOffer']);
 Route::post('/stream-answer',  [WebrtcStreamingController::class , 'makeStreamAnswer']);
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/upload', [App\Http\Controllers\HomeController::class, 'upload'])->name('upload');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/upload', [HomeController::class, 'upload'])->name('upload');

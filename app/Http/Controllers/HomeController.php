@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\PushrEvent;
 use App\Helper\Pattern\Adapter\Adapter;
 use App\Helper\Pattern\Adapter\Item_1;
 use App\Helper\Pattern\Adapter\Item_2;
@@ -45,6 +46,7 @@ class HomeController extends Controller
     }
     public function test()
     {
+        event(new PushrEvent('hi'));
 /*        $datas = collect([
             ['name' => 'sina'],
             ['name' => 'arash']
@@ -92,6 +94,17 @@ class HomeController extends Controller
             ->checkSession($request->code , 'viewBtn');
     }
     public function buyProduct(){
-        return redirect()->route('api.data');
+
+    }
+
+    public function form()
+    {
+        return view('form');
+    }
+
+    public function sendForm(Request $request)
+    {
+        event(new PushrEvent($request->text));
+        return back();
     }
 }
