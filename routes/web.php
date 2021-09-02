@@ -34,6 +34,9 @@ Route::post('/form' , [HomeController::class , 'sendForm'])->name('send.form');
 Route::prefix('/app')->as('app')->middleware('auth')->group(function (){
     Route::get('/' , [MessengerController::class , 'app'])->name('.index');
     Route::post('/search/user' , [MessengerController::class , 'searchUser'])->name('.search.user');
+    Route::post('/check/status/user' , [MessengerController::class , 'checkStatus'])->name('.check.status');
+    Route::post('/check/status/my' , [MessengerController::class , 'checkStatusMy'])->name('.check.statusMy');
+    Route::post('/offline/user' , [MessengerController::class , 'offlineUser'])->name('.offline.user');
 });
 // </ Messenger >
 

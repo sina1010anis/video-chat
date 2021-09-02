@@ -10,7 +10,8 @@ const app = createApp({
     data: () => ({
         test: 'test',
         messages:[],
-        username:''
+        username:'',
+        statusMenu:false,
     }),
     components: {
         test,
@@ -18,6 +19,16 @@ const app = createApp({
         viewer:Viewer
     },
     methods:{
+        view_menu_user(){
+            if (this.statusMenu){
+                $('.name-user i').attr('class' , 'fas fa-arrow-circle-down pointer');
+                this.statusMenu = false;
+            }else {
+                $('.name-user i').attr('class' , 'fas fa-arrow-circle-up pointer');
+                this.statusMenu = true;
+            }
+            $('.box').stop().slideToggle()
+        },
         buyProduct(){
             axios.post('/buy').then((res) => {
                 alert('ok');
@@ -42,19 +53,17 @@ const app = createApp({
         }
     },
     mounted() {
-        setTimeout(()=>{
-            if (this.username == ''){
-                $(".box").fadeOut();
-                $(".box ul").html('');
-            }
-        },1000)
+        setInterval(()=>{
+            axios.post('/app/check/status/user').then((res)=>{
+                $('.box ul').html(res.data)
+            })
+        },2000)
         Pusher.logToConsole = true;
 
         var pusher = new Pusher('ba14d1191e4b057816f1', {
             cluster: 'eu',
             forceTLS:true
         });
-
         var channel = pusher.subscribe('my-channel');
         channel.bind('my-event', (data)=>{
             this.messages.push(data.message);

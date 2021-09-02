@@ -59,7 +59,8 @@
     border-radius: 100px ;
 }
 ::-webkit-scrollbar ,::-webkit-scrollbar-thumb{
-    overflow: hidden;
+    display: none;
+    visibility: hidden;
 }
 .input-message button{
     top: 0;
@@ -117,9 +118,18 @@
     background-color: #ffffff;
     opacity: 50%;
 }
-.online{
+.online , .offline{
     width: 10px;
     border-radius: 50%;
     background-color: forestgreen;
     height: 10px;
+}
+.offline{
+    background-color: #ff2121;
+}
+.name-user span{
+    position: absolute;
+    top: 25px;
+    left: 10px;
+    color: #ffffff;
 }
