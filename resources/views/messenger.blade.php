@@ -12,7 +12,7 @@
         <div class="shit-app select-center">
             <div class="box-search">
                 <div class="name-user">
-                    <h3 align="center" class="set-font color-b-100">Sina</h3>
+                    <h3 align="center" class="set-font color-b-100">{{request()->get('user')}}</h3>
                     <span class="fl-left"><i @click="view_menu_user" class="fas fa-arrow-circle-down pointer"></i></span>
                 </div>
             </div>
@@ -25,36 +25,34 @@
             </div>
             <div class="view-chat">
                 <div class="chat">
-                    <div class="you-message fl-left">
-                        <p dir="rtl" class="set-font f-11 color-b-700">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam dolorem laborum maiores. Cum doloribus molestiae natus non officia quod repellendus voluptas! Aliquid dolore ducimus esse hic molestias, odit vel voluptatum.</p>
-                    </div>
-                    <div class="my-message fl-right">
-                        <p dir="rtl" class="set-font f-11 color-b-700">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam dolorem laborum maiores. Cum doloribus molestiae natus non officia quod repellendus voluptas! Aliquid dolore ducimus esse hic molestias, odit vel voluptatum.</p>
-                    </div>
-                    <div class="you-message fl-left">
-                        <p dir="rtl" class="set-font f-11 color-b-700">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam dolorem laborum maiores. Cum doloribus molestiae natus non officia quod repellendus voluptas! Aliquid dolore ducimus esse hic molestias, odit vel voluptatum.</p>
-                    </div>
-                    <div class="my-message fl-right">
-                        <p dir="rtl" class="set-font f-11 color-b-700">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam dolorem laborum maiores. Cum doloribus molestiae natus non officia quod repellendus voluptas! Aliquid dolore ducimus esse hic molestias, odit vel voluptatum.</p>
-                    </div>
-                    <div class="you-message fl-left">
-                        <p dir="rtl" class="set-font f-11 color-b-700">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam dolorem laborum maiores. Cum doloribus molestiae natus non officia quod repellendus voluptas! Aliquid dolore ducimus esse hic molestias, odit vel voluptatum.</p>
-                    </div>
-                    <div class="my-message fl-right">
-                        <p dir="rtl" class="set-font f-11 color-b-700">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam dolorem laborum maiores. Cum doloribus molestiae natus non officia quod repellendus voluptas! Aliquid dolore ducimus esse hic molestias, odit vel voluptatum.</p>
-                    </div>
-                    <div class="you-message fl-left">
-                        <p dir="rtl" class="set-font f-11 color-b-700">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam dolorem laborum maiores. Cum doloribus molestiae natus non officia quod repellendus voluptas! Aliquid dolore ducimus esse hic molestias, odit vel voluptatum.</p>
-                    </div>
-                    <div class="my-message fl-right">
-                        <p dir="rtl" class="set-font f-11 color-b-700">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam dolorem laborum maiores. Cum doloribus molestiae natus non officia quod repellendus voluptas! Aliquid dolore ducimus esse hic molestias, odit vel voluptatum.</p>
-                    </div>
-                    <div class="you-message fl-left">
-                        <p dir="rtl" class="set-font f-11 color-b-700">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam dolorem laborum maiores. Cum doloribus molestiae natus non officia quod repellendus voluptas! Aliquid dolore ducimus esse hic molestias, odit vel voluptatum.</p>
-                    </div>
-                    <div class="my-message fl-right">
-                        <p dir="rtl" class="set-font f-11 color-b-700">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam dolorem laborum maiores. Cum doloribus molestiae natus non officia quod repellendus voluptas! Aliquid dolore ducimus esse hic molestias, odit vel voluptatum.</p>
-                    </div>
+                    @if($status)
+                        @foreach($comments as $comment)
+                            @if($comment->sender == auth()->user()->id)
+                                <div class="my-message fl-right">
+                                    <h5 align="right" class="set-font color-b-900 m-p-0">{{auth()->user()->name}}</h5>
+                                    <p dir="rtl" class="set-font f-11 color-b-800">
+                                       {{$comment->text}}
+                                    </p>
+                                    <p align="right" class="set-font color-b-500 f-9 m-p-0">{{$comment->created_at}}
+                                        @if($comment->status == 0)
+                                            <span class="fl-left"><i style="color: #444bff" class="fas fa-check-double"></i></span>
+                                        @else
+                                            <span class="fl-left"><i class="fas fa-check"></i></span>
+                                        @endif
+                                    </p>
+                                </div>
+                            @else
+                                <div class="you-message fl-left">
+                                    <h5 class="set-font color-b-900 m-p-0">{{$comment->user_get->name}}</h5>
+                                    <p dir="rtl" class="set-font f-11 color-b-800">
+                                        {{$comment->text}}
+                                    </p>
+                                    <p class="set-font color-b-500 f-9 m-p-0">{{$comment->created_at}}
+                                    </p>
+                                </div>
+                            @endif
+                        @endforeach
+                    @endif
                 </div>
             </div>
             <div class="input-message">
