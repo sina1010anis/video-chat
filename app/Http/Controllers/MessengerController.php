@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\PushrEvent;
 use App\Models\Comment;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -21,7 +23,7 @@ class MessengerController extends Controller
                 where(['sender' => auth()->user()->id , 'getter' => $user->id])
                 ->orWhere('sender' , $user->id)
                 ->where('getter' ,auth()->user()->id)
-                ->orderBy('id' , 'DESC')
+                ->orderBy('id' , 'ASC')
                 ->get();
             return view('messenger' , compact('comments' , 'status'));
         }
@@ -61,5 +63,11 @@ class MessengerController extends Controller
     {
         User::find(auth()->user()->id)->update(['status' => 0]);
         return 'ok';
+    }
+    public function sendMessage(Request $request , $getter){
+        $time=Carbon::now();
+        $user = User::find(auth()->user()->id)->first('name');
+        event(new PushrEvent($request->message , $getter , $time , $user->name));
+        return back();
     }
 }

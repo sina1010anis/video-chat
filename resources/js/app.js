@@ -12,6 +12,7 @@ const app = createApp({
         messages:[],
         username:'',
         statusMenu:false,
+        text:'',
     }),
     components: {
         test,
@@ -58,16 +59,6 @@ const app = createApp({
                 $('.box ul').html(res.data)
             })
         },2000)
-        Pusher.logToConsole = true;
-
-        var pusher = new Pusher('ba14d1191e4b057816f1', {
-            cluster: 'eu',
-            forceTLS:true
-        });
-        var channel = pusher.subscribe('my-channel');
-        channel.bind('my-event', (data)=>{
-            this.messages.push(data.message);
-        });
     }
 })
 

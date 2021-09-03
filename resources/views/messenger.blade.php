@@ -5,7 +5,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Messenger</title>
-    <script src="https://kit.fontawesome.com/d4c29863c5.js" crossorigin="anonymous"></script>
+{{--    <script src="https://kit.fontawesome.com/d4c29863c5.js" crossorigin="anonymous"></script>--}}
 </head>
 <body>
     <div id="app">
@@ -56,8 +56,13 @@
                 </div>
             </div>
             <div class="input-message">
-                <textarea dir="rtl"  class="set-font input-textarea f-10" name="message" placeholder="comment..."></textarea>
-                <button><i class="fas fa-paper-plane pointer"></i></button>
+                @if(request()->has('user'))
+                    <form action="{{route('app.send' , [ 'getter' => \App\Models\User::whereName(request()->get('user'))->first('id') ])}}" method="post">
+                        @csrf
+                        <textarea dir="rtl" class="set-font input-textarea f-10" name="message" placeholder="Comment..."></textarea>
+                        <button type="submit"><i class="fas fa-paper-plane pointer"></i></button>
+                    </form>
+                @endif
             </div>
         </div>
     </div>
@@ -70,6 +75,30 @@
         axios.post('/app/offline/user').then((res)=>{
             window.location = 'http://localhost:8000/'
         })
+    });
+</script>
+<script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+<script>
+    // Enable pusher logging - don't include this in production
+    Pusher.logToConsole = true;
+
+    var pusher = new Pusher('ba14d1191e4b057816f1', {
+        cluster: 'eu',
+        forceTLS:true
+    });
+
+    var channel = pusher.subscribe('my-channel');
+    channel.bind('my-event', function(data) {
+        $('.chat').append(`
+                                        <div class="you-message fl-left">
+                                    <h5 class="set-font color-b-900 m-p-0">`+data.user+`</h5>
+                                    <p dir="rtl" class="set-font f-11 color-b-800">
+                                        `+data.data+`
+        </p>
+        <p class="set-font color-b-500 f-9 m-p-0">`+data.time+`
+        </p>
+    </div>
+`)
     });
 </script>
 </html>
