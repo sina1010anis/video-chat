@@ -26,7 +26,7 @@
                                         <td>{{$user->name}}</td>
                                         <td>{{$user->email}}</td>
                                         <td>
-                                            @if(Cache::has('user-is-online-' . $user->id))
+                                            @if(\Illuminate\Support\Facades\Cache::has('user-is-online-' . $user->id))
                                                 <span class="text-success">Online</span>
                                             @else
                                                 <span class="text-secondary">Offline</span>

@@ -43,7 +43,7 @@ Route::prefix('/app')->as('app')->middleware('auth')->group(function (){
 
 
 // < User Online >
-    Route::get('/check' , [\App\Http\Controllers\UserController::class , 'userOnlineStatus']);
+    //Route::get('/check' , [\App\Http\Controllers\UserController::class , 'userOnlineStatus']);
     Route::get('/view' , [\App\Http\Controllers\UserController::class , 'view']);
 // </ User Online >
 
