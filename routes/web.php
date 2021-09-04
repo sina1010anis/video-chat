@@ -41,6 +41,13 @@ Route::prefix('/app')->as('app')->middleware('auth')->group(function (){
 });
 // </ Messenger >
 
+
+// < User Online >
+    Route::get('/check' , [\App\Http\Controllers\UserController::class , 'userOnlineStatus']);
+    Route::get('/view' , [\App\Http\Controllers\UserController::class , 'view']);
+// </ User Online >
+
+
 Route::get('/test' , [HomeController::class , 'test'])->name('test');
 
 Auth::routes(['verify' => true]);

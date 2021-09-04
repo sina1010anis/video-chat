@@ -1,42 +1,32 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Events\PushrEvent;
-use App\Models\Comment;
 use App\Models\User;
-use Carbon\Carbon;
+use App\Repository\Messenger\Comment\ViewCommentRoom;
+use App\Repository\Messenger\User\EditStatus;
+use App\Repository\Messenger\User\URL_GET;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-
-class MessengerController extends Controller
-{
-    public function app()
-    {
-        User::find(auth()->user()->id)->update(['status' => 1]);
-        $status = false;
-        if (\request()->has('user')){
+class MessengerController extends Controller{
+    public $status = false;
+    protected $editStatus;
+    protected $URL_GET;
+    protected $viewCommentRoom;
+    public function __construct(EditStatus $editStatus , URL_GET $URL_GET , ViewCommentRoom $viewCommentRoom){
+        $this->editStatus = $editStatus;
+        $this->URL_GET = $URL_GET;
+        $this->viewCommentRoom = $viewCommentRoom;
+    }
+    public function app(){
+        $this->editStatus::edit('online');
+        if ($this->URL_GET->get_url_user('has')){
             $status = true;
-            $name = \request()->get('user');
-            $user = User::whereName($name)->first();
-            $comments = Comment::
-                where(['sender' => auth()->user()->id , 'getter' => $user->id])
-                ->orWhere('sender' , $user->id)
-                ->where('getter' ,auth()->user()->id)
-                ->orderBy('id' , 'ASC')
-                ->get();
-            return view('messenger' , compact('comments' , 'status'));
+            $user = User::whereName($this->URL_GET->get_url_user('get'))->first();
+            return view('messenger' , compact( 'status'))->with('comments' , $this->viewCommentRoom->viewComment($user));
         }
-        return view('messenger' , compact('status'));
+        return view('messenger')->with('status' , $this->status);
     }
-
-    public function searchUser(Request $request)
-    {
-
-    }
-
-    public function checkStatus()
-    {
+    public function checkStatus(){
         $user = '';
         $datas = User::where('id' , '!=' , auth()->user()->id)->get();
         foreach($datas as $data){
@@ -49,25 +39,19 @@ class MessengerController extends Controller
         }
         return $user;
     }
-
-    public function checkStatusMy()
-    {
+    public function checkStatusMy(){
         if (session()->has('user online '.auth()->user()->id)){
-            User::find(auth()->user()->id)->update(['status' => 1]);
+            $this->editStatus::edit('online');
         }else{
-            User::find(auth()->user()->id)->update(['status' => 0]);
+            $this->editStatus::edit('offline');
         }
     }
-
-    public function offlineUser()
-    {
-        User::find(auth()->user()->id)->update(['status' => 0]);
+    public function offlineUser(){
+        $this->editStatus::edit('offline');
         return 'ok';
     }
     public function sendMessage(Request $request , $getter){
-        $time=Carbon::now();
-        $user = User::find(auth()->user()->id)->first('name');
-        event(new PushrEvent($request->message , $getter , $time , $user->name));
+        event(new PushrEvent($request->message , $getter , $this->editStatus->time_now() , $this->editStatus->get()->name));
         return back();
     }
 }
