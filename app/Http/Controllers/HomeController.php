@@ -46,7 +46,7 @@ class HomeController extends Controller
     }
     public function test()
     {
-        event(new PushrEvent('hi'));
+        return User::inRandomOrder()->first();
 /*        $datas = collect([
             ['name' => 'sina'],
             ['name' => 'arash']
